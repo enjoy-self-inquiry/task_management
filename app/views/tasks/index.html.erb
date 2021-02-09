@@ -1,0 +1,14 @@
+<div class="container">
+  <h2 class="title">タスク一覧</h2>
+      <div class="row">
+        <% @tasks.each do |task| %>
+          <div>
+            <%= task.title %>
+            <br><br>
+            <%= task.content %>
+            <br><br>
+            <%= link_to "詳細", task_path(task.id) %>
+          </div>
+        <% end %>
+      </div>
+</div>
