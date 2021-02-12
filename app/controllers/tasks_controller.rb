@@ -5,7 +5,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = task.new(task_params)
+    @task = Task.new(task_params)
     if params[:back]
       render :new
     else
