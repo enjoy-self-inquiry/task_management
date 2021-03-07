@@ -30,6 +30,13 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: "DESC")
+    if params[:sort_expired]
+      @tasks = Task.order(expire: :asc)
+    #elsif params[:created_at]
+    #  @tasks = Task.where(user_id:current_user.id).order(created_at: :desc)
+    #elsif params[:priority]
+    #  @tasks = Task.where(user_id:current_user.id).order(priority: :asc)
+    end
   end
 
   def show
@@ -42,7 +49,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :content)
+    params.require(:task).permit(:title, :content, :expire)
   end
   def set_task
     @task = Task.find(params[:id])
