@@ -5,4 +5,5 @@ class Task < ApplicationRecord
   #validates :progress, presence: true
   scope :search_title, -> (title){ where("title LIKE?","%#{title}%") }
   scope :search_progress, -> (progress) {where(progress: progress)}
+  enum priority: { 高:0, 中:1, 低:2 }
 end
