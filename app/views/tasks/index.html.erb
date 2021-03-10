@@ -22,6 +22,7 @@
           </tr>
           <br><br>
         <% end %>
+        <%= paginate @tasks %>
         <%= link_to 'タスクを新規作成', new_task_path %>
       </div>
 </div>

@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
+  PER = 5
   def new
     @task = Task.new
   end
@@ -30,21 +31,21 @@ class TasksController < ApplicationController
 
   def index
     if params[:sort_expired]
-      @tasks = Task.all.order(expire: :asc)
+      @tasks = Task.all.order(expire: :asc).page(params[:page]).per(PER)
     elsif params[:sort_priority]
-      @tasks = Task.all.order(priority: :asc)
+      @tasks = Task.all.order(priority: :asc).page(params[:page]).per(PER)
     else
-      @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(PER)
     end
 
     if params[:task].present?
       if params[:task][:title].present? && params[:task][:progress].present?
-        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
-        @tasks = @tasks.where(progress: params[:task][:progress])
+        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%").page(params[:page]).per(PER)
+        @tasks = @tasks.where(progress: params[:task][:progress]).page(params[:page]).per(PER)
       elsif params[:task][:title].present?
-        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
+        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%").page(params[:page]).per(PER)
       elsif params[:task][:progress].present?
-        @tasks = @tasks.where(progress: params[:task][:progress])
+        @tasks = @tasks.where(progress: params[:task][:progress]).page(params[:page]).per(PER)
       end
     end
   end
