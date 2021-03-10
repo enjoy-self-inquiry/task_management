@@ -8,6 +8,7 @@ ja:
         title: タイトル
         content: 内容
         expire: 終了期限
+        progress: ステータス
       user:
         title: タイトル
         name: 名前

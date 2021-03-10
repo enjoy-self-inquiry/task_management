@@ -16,6 +16,10 @@
     <%= form.text_field :title %>
     <%= form.label :content %>
     <%= form.text_field :content %>
+    <%= form.label :expire %>
+    <%= form.date_field :expire %>
+    <%= form.label :progress %>
+    <%= form.select :progress, [["未着手", "未着手"], ["着手中", "着手中"],["完了", "完了"]], include_blank: "選択して下さい" %>
   </div>
   <%= form.submit %>
 

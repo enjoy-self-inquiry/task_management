@@ -29,13 +29,23 @@ class TasksController < ApplicationController
   end
 
   def index
-    @tasks = Task.all.order(created_at: "DESC")
     if params[:sort_expired]
-      @tasks = Task.order(expire: :asc)
-    #elsif params[:created_at]
-    #  @tasks = Task.where(user_id:current_user.id).order(created_at: :desc)
-    #elsif params[:priority]
-    #  @tasks = Task.where(user_id:current_user.id).order(priority: :asc)
+      @tasks = Task.all.order(expire: :asc)
+    else
+      @tasks = Task.all.order(created_at: :desc)
+    end
+    if params[:task].present?
+      if params[:task][:title].present? && params[:task][:progress].present?
+        #両方title and progressが成り立つ検索結果を返す
+        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
+        @tasks = @tasks.where(progress: params[:task][:progress])
+        #渡されたパラメータがtask titleのみだったとき
+      elsif params[:task][:title].present?
+        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%")
+        #渡されたパラメータがステータスのみだったとき
+      elsif params[:task][:progress].present?
+        @tasks = @tasks.where(progress: params[:task][:progress])
+      end
     end
   end
 
@@ -49,7 +59,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :content, :expire)
+    params.require(:task).permit(:title, :content, :expire, :progress)
   end
   def set_task
     @task = Task.find(params[:id])
