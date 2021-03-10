@@ -4,12 +4,28 @@
     <title>TaskManagement</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <meta name="viewport" content="width=device-width">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" rel="stylesheet">
   </head>
 
   <body>
+    <header>
+      <ul>
+        <li><%= link_to tasks_path, title: "トップページ" do %>
+          <i class="fas fa-tasks fa-2x white"></i>
+        <% end %>
+        </li>
+        <li><%= link_to new_task_path, title: "新規作成" do %>
+          <i class="fas fa-pen-fancy fa-2x white"></i>
+        <% end %>
+        </li>
+      </ul>
+    </header>
     <%= yield %>
+    <footer>
+      <p>タスク管理アプリ</p>
+    </footer>
   </body>
 </html>
