@@ -7,6 +7,9 @@ ja:
       task:
         title: タイトル
         content: 内容
+        expire: 終了期限
+        progress: ステータス
+        priority: 優先順位
       user:
         title: タイトル
         name: 名前

@@ -1,17 +1,37 @@
 <div class="container">
   <p><%= notice %></p>
   <h2 class="title">タスク一覧</h2>
+  <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
+  <%= link_to "優先度でソートする", tasks_path(sort_priority: "true") %>
+  <%= form_with(model: Task.new, method: :get, local: true, url: tasks_path) do |form| %>
+    <%= form.text_field :title %>
+    <%= form.select :progress, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択して下さい" %>
+    <%= form.submit '検索', name: nil %>
+  <% end %>
       <div class="task_row">
-        <% @tasks.each do |task| %>
+        <table>
           <tr>
-            <td><%= task.title %></td>
-            <td><%= task.content %></td>
-            <td><%= link_to "詳細", task_path(task.id) %></td>
-            <td><%= link_to "編集する", edit_task_path(task.id), data: {confirm: "本当に編集しますか？"} %></td>
-            <td><%= link_to "削除する", task_path(task.id), method: :delete, data: {confirm: "本当に削除しますか？"} %></td>
+            <th>タイトル</th>
+            <th>内容</th>
+            <th>終了期限</th>
+            <th>進捗状況</th>
+            <th>優先度</th>
           </tr>
-          <br><br>
-        <% end %>
+          <% @tasks.each do |task| %>
+            <tr>
+              <td><%= task.title %></td>
+              <td><%= task.content %></td>
+              <td><%= task.expire %></td>
+              <td><%= task.progress %></td>
+              <td><%= task.priority %></td>
+              <td><div class="label label-info"><%= link_to "詳細", task_path(task.id) %></div></td>
+              <td><div class="label label-warning"><%= link_to "編集", edit_task_path(task.id), data: {confirm: "本当に編集しますか？"} %></div></td>
+              <td><div class="label label-danger"><%= link_to "削除", task_path(task.id), method: :delete, data: {confirm: "本当に削除しますか？"} %></div></td>
+            </tr>
+          <% end %>
+        </table>
+        <%= paginate @tasks %>
+        <br>
         <%= link_to 'タスクを新規作成', new_task_path %>
       </div>
 </div>

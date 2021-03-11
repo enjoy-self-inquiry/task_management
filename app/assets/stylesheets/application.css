@@ -10,6 +10,13 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+ *= require bootstrap/dist/css/bootstrap.min
  *= require_tree .
  *= require_self
  */
+ @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+
+body {
+  background-color: #B9C4DB;
+  font-family: 'Kosugi Maru', sans-serif;
+}
