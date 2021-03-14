@@ -1,12 +1,12 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-  PER = 5
+  PER = 3
   def new
     @task = Task.new
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if params[:back]
       render :new
     else
@@ -30,24 +30,22 @@ class TasksController < ApplicationController
   end
 
   def index
-    if params[:sort_expired]
-      @tasks = Task.all.order(expire: :asc).page(params[:page]).per(PER)
-    elsif params[:sort_priority]
-      @tasks = Task.all.order(priority: :asc).page(params[:page]).per(PER)
-    else
-      @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(PER)
-    end
+      @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.all.order(expire: :asc) if params[:sort_expired]
+      @tasks = Task.all.order(priority: :asc) if params[:sort_priority]
 
     if params[:task].present?
-      if params[:task][:title].present? && params[:task][:progress].present?
-        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%").page(params[:page]).per(PER)
-        @tasks = @tasks.where(progress: params[:task][:progress]).page(params[:page]).per(PER)
-      elsif params[:task][:title].present?
-        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%").page(params[:page]).per(PER)
-      elsif params[:task][:progress].present?
-        @tasks = @tasks.where(progress: params[:task][:progress]).page(params[:page]).per(PER)
-      end
+
+        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%") if params[:task][:title].present? && params[:task][:progress].present?
+        @tasks = @tasks.where(progress: params[:task][:progress]) if params[:task][:title].present? && params[:task][:progress].present?
+
+        @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%") if params[:task][:title].present?
+
+        @tasks = @tasks.where(progress: params[:task][:progress]) if params[:task][:progress].present?
     end
+
+    @tasks = @tasks.page(params[:page]).per(PER)
+
   end
 
   def show

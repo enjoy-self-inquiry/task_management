@@ -45,6 +45,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     arel (9.0.0)
+    bcrypt (3.1.11)
     bindex (0.8.1)
     bootsnap (1.7.2)
       msgpack (~> 1.0)
@@ -88,6 +89,9 @@ GEM
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    kaminari-bootstrap (3.0.1)
+      kaminari (>= 0.13.0)
+      rails
     launchy (2.5.0)
       addressable (~> 2.7)
     listen (3.1.5)
@@ -222,6 +226,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt (= 3.1.11)
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)
@@ -230,6 +235,7 @@ DEPENDENCIES
   faker
   jbuilder (~> 2.5)
   kaminari (~> 0.17.0)
+  kaminari-bootstrap (~> 3.0.1)
   launchy
   listen (>= 3.0.5, < 3.2)
   pg (>= 0.18, < 2.0)
