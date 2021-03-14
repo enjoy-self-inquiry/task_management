@@ -34,6 +34,5 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'webdrivers'
 end
-
 gem 'kaminari', '~> 0.17.0'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
