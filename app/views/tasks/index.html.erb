@@ -13,6 +13,7 @@
           <tr>
             <th>タイトル</th>
             <th>内容</th>
+            <th>ユーザー名</th>
             <th>終了期限</th>
             <th>進捗状況</th>
             <th>優先度</th>
@@ -21,6 +22,7 @@
             <tr>
               <td><%= task.title %></td>
               <td><%= task.content %></td>
+              <td><%= task.user.name %></td>
               <td><%= task.expire %></td>
               <td><%= task.progress %></td>
               <td><%= task.priority %></td>

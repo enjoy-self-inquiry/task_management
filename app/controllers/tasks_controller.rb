@@ -19,6 +19,10 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task = Task.find(params[:id])
+    if @task.user != current_user
+      redirect_to tasks_path, alert: "不正なアクセスです。"
+    end
   end
 
   def update
@@ -30,22 +34,17 @@ class TasksController < ApplicationController
   end
 
   def index
-      @tasks = Task.all.order(created_at: :desc)
-      @tasks = Task.all.order(expire: :asc) if params[:sort_expired]
-      @tasks = Task.all.order(priority: :asc) if params[:sort_priority]
+      @tasks = Task.where(user_id:current_user.id).order(created_at: :desc)
+      @tasks = Task.where(user_id:current_user.id).order(expire: :asc) if params[:sort_expired]
+      @tasks = Task.where(user_id:current_user.id).order(priority: :asc) if params[:sort_priority]
 
     if params[:task].present?
-
         @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%") if params[:task][:title].present? && params[:task][:progress].present?
         @tasks = @tasks.where(progress: params[:task][:progress]) if params[:task][:title].present? && params[:task][:progress].present?
-
         @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%") if params[:task][:title].present?
-
         @tasks = @tasks.where(progress: params[:task][:progress]) if params[:task][:progress].present?
     end
-
     @tasks = @tasks.page(params[:page]).per(PER)
-
   end
 
   def show
