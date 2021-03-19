@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_122720) do
     t.integer "priority"
     t.bigint "user_id"
     t.index ["title"], name: "index_tasks_on_title", unique: true
-    t.index ["user_id"], name: "index_tasks_on_user_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
