@@ -30,6 +30,10 @@
             <i class="fas fa-sign-out-alt fa-2x white"></i>
             <% end %>
           </li>
+          <li><%= link_to admin_users_path(current_user.id), title: "管理画面" do %>
+            <i class="fas fa-user-cog fa-2x white"></i>
+          <% end %>
+          </li>
         <% else %>
           <li><%= link_to new_user_path, title: "新規登録" do %>
             <i class="fas fa-user-plus fa-2x white"></i>
@@ -41,11 +45,6 @@
         <% end %>
       </ul>
     </header>
-
-    <% flash.each do |key, value| %>
-      <%= content_tag(:div, value, class: "#{key}") %>
-    <% end %>
-
     <%= yield %>
     <footer>
       <p>タスク管理アプリ</p>

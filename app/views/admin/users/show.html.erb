@@ -1,0 +1,40 @@
+<div class="container">
+<h2>ユーザー情報</h2>
+<p>ユーザーID：<%= @user.id %></p>
+<p>ユーザー名：<%= @user.name %></p>
+<p>タスク数：<%= @user.tasks.count %></p>
+<% if @user.admin? %>
+  <p>権限：管理者アカウント</p>
+<% else %>
+  <p>権限：一般</p>
+<% end %>
+<br>
+<h5><%= @user.name %>のタスク一覧</h5>
+<div class="task_row">
+<table>
+    <tr>
+      <th>タイトル</th>
+      <th>内容</th>
+      <th>終了期限</th>
+      <th>進捗状況</th>
+      <th>優先度</th>
+    </tr>
+  <% @user.tasks.each do|task| %>
+    <tr>
+      <td><%= task.title %></td>
+      <td><%= task.content %></td>
+      <td><%= task.expire %></td>
+      <td><%= task.progress %></td>
+      <td><%= task.priority %></td>
+      <td><div class="label label-info"><%= link_to '詳細',task_path(task.id) %></div></td>
+      <td><div class="label label-warning"><%= link_to '編集',edit_task_path(task.id) %></div></td>
+      <td><div class="label label-danger"><%= link_to '削除',task_path(task.id), method: :delete, data:{ confirm: "削除しますか？"} %></div></td>
+    </tr>
+  <% end %>
+</table>
+</div>
+<br>
+<div>
+  <%= link_to '管理一覧画面へ', admin_users_path, class:'btn btn-info' %>
+</div>
+</div>
