@@ -10,7 +10,7 @@
       <th>管理者権限</th>
     </tr>
     <% @users.each do |user| %>
-    <tr class="row task_row">
+    <tr class="row user_row">
       <td class="col-md-1 offset-md-4 index_items"><%= user.name %></td>
       <td class="col-md-2 index_items"><%= user.email %></td>
       <td class="col-md-1 index_items"><%= user.tasks.count %>
