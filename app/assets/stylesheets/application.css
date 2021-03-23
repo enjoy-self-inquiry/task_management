@@ -20,3 +20,6 @@ body {
   background-color: #B9C4DB;
   font-family: 'Kosugi Maru', sans-serif;
 }
+#notice {
+  color: red;
+}
