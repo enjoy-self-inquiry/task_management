@@ -38,6 +38,8 @@ class TasksController < ApplicationController
       @tasks = Task.where(user_id:current_user.id).order(expire: :asc) if params[:sort_expired]
       @tasks = Task.where(user_id:current_user.id).order(priority: :asc) if params[:sort_priority]
 
+      @tasks = @tasks.joins(:labels).where(labels: { id: params[:label_id] }) if params[:label_id].present?
+
     if params[:task].present?
         @tasks = @tasks.where('title LIKE ?', "%#{params[:task][:title]}%") if params[:task][:title].present? && params[:task][:progress].present?
         @tasks = @tasks.where(progress: params[:task][:progress]) if params[:task][:title].present? && params[:task][:progress].present?
@@ -48,6 +50,7 @@ class TasksController < ApplicationController
   end
 
   def show
+    @labels = @task.labels
   end
 
   def destroy
@@ -57,7 +60,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:title, :content, :expire, :progress, :priority)
+    params.require(:task).permit(:title, :content, :expire, :progress, :priority, label_ids: [] )
   end
   def set_task
     @task = Task.find(params[:id])

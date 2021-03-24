@@ -6,5 +6,12 @@
   <p>期限: <%= @task.expire %></p>
   <p>ステータス: <%= @task.progress %></p>
   <p>優先順位： <%= @task.priority %></p>
+  <p>ラベル：
+    <% @labels.each do |label| %>
+      <span class="badge bg-secondary">
+        <%= label.name %>
+      </span>
+      <% end %>
+    </p>
   <%= link_to '一覧画面に戻る', tasks_path %>
 </div>
