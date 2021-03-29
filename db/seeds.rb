@@ -22,3 +22,7 @@ User.create(name:"admin_user1",
                password_confirmation: password,
                )
 end
+
+10.times do |n|
+  Label.create(name: "#{n}番目のラベル")
+end

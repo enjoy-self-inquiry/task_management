@@ -20,5 +20,11 @@
   <%= f.select :progress, [["未着手", "未着手"], ["着手中", "着手中"],["完了", "完了"]], include_blank: "選択して下さい" %>
   <%= f.label :priority %>
   <%= f.select :priority, Task.priorities.keys.to_a, include_blank: "選択して下さい" %>
+  <br>
+  <% Label.all.each do |label| %>
+    <%= f.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+    <%= f.label :label_ids, label.name, value: label[:id] %>
+  <% end %>
+
   <%= f.submit "登録する" %>
 <% end %>

@@ -22,6 +22,11 @@
     <%= form.select :progress, [["未着手", "未着手"], ["着手中", "着手中"],["完了", "完了"]], include_blank: "選択して下さい" %>
     <%= form.label :priority %>
     <%= form.select :priority, Task.priorities.keys.to_a, include_blank: "選択して下さい" %>
+    <br>
+    <% Label.all.each do |label| %>
+      <%= form.check_box :label_ids, { multiple: true, checked: label[:checked], disabled: label[:disabled], include_hidden: false }, label[:id] %>
+      <%= form.label :label_ids, label.name, value: label[:id] %>
+    <% end %>
   </div>
   <%= form.submit %>
 

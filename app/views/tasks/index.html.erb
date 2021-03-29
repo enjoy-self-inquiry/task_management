@@ -36,6 +36,12 @@
         </table>
         <%= paginate @tasks %>
         <br>
+
+        <%= form_with url: tasks_path, method: :get, local: true do |form| %>
+          <%= form.select("label_id", Label.pluck(:name, :id), { include_blank: true }) %>
+          <%= form.submit 'Search', name: nil %>
+        <% end %>
+
         <%= link_to 'タスクを新規作成', new_task_path %>
       </div>
 </div>
